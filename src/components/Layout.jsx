@@ -1,4 +1,5 @@
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import CustomLink from "./CustomLink";
 
 const Layout = () => {
   return (
@@ -6,13 +7,13 @@ const Layout = () => {
       <header>
         {/* <a href="/">Home</a>  - так было с перезагрузкой страницы*/}
         {/* а теперь без нее, все тоже самое только линк и вместо хрефа - to */}
-        <Link to="/">Home </Link>
-        <Link to="/posts">Blog</Link>
-        <Link to="/about">About</Link>
+        <CustomLink to="/">Home</CustomLink>
+        <CustomLink to="/posts">Blog</CustomLink>
+        <CustomLink to="/about">About</CustomLink>
       </header>
 
       <main className="container">
-        <Outlet />{" "}
+        <Outlet />
         {/* Тут я говорю куда я хочу вставить все , что есть в Layout'е в App (крч тут будет вся динамика)  */}
       </main>
 
