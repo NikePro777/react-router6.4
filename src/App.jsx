@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
+import { AuthProvider } from "./hoc/AuthProvider";
 import RequireAuth from "./hoc/RequireAuth";
 import About from "./pages/AboutPage";
 import BlogPage from "./pages/BlogPage";
@@ -12,7 +13,7 @@ import SinglePage from "./pages/SinglePage";
 
 function App() {
   return (
-    <>
+    <AuthProvider>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
@@ -33,7 +34,7 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
-    </>
+    </AuthProvider>
   );
 }
 
