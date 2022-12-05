@@ -12,6 +12,7 @@ const BlogPage = () => {
     <div>
       <h1>BlogPage</h1>
       <h2>Our News</h2>
+      <Link to="/posts/new">Add new post</Link>
       {posts.map((post) => (
         <Link key={post.id} to={`/posts/${post.id}`}>
           <li>{post.title}</li>
