@@ -9,11 +9,11 @@ export const AuthProvider = ({ children }) => {
     setUser(newUser);
     cb();
   };
-  const signup = (cb) => {
+  const signout = (cb) => {
     setUser(null);
     cb();
   };
 
-  const value = { user, signin, signup };
+  const value = { user, signin, signout };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
