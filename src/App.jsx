@@ -28,7 +28,10 @@ function App() {
               </RequireAuth>
             }
           />
-          <Route path="about" element={<About />} />
+          <Route path="about" element={<About />}>
+            <Route path="contacts" element={<p>Our contacts</p>}></Route>
+            <Route path="team" element={<p>Our team</p>}></Route>
+          </Route>
           <Route path="about-us" element={<Navigate to="/about" replace />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="*" element={<NotFoundPage />} />
