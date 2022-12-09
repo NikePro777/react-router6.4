@@ -1,8 +1,15 @@
-import { Link, useLoaderData, useSearchParams } from "react-router-dom";
+import { Suspense } from "react";
+import {
+  Await,
+  defer,
+  Link,
+  useLoaderData,
+  useSearchParams,
+} from "react-router-dom";
 import BlogFilter from "../components/BlogFilter";
 
 const BlogPage = () => {
-  const posts = useLoaderData();
+  const { posts } = useLoaderData();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const postQuery = searchParams.get("post") || "";
@@ -20,22 +27,39 @@ const BlogPage = () => {
         setSearchParams={setSearchParams}
       />
       <Link to="/posts/new">Add new post</Link>
-      {posts
-        .filter(
-          (post) => post.title.includes(postQuery) && post.id >= startsFrom
-        )
-        .map((post) => (
-          <Link key={post.id} to={`/posts/${post.id}`}>
-            <li>{post.title}</li>
-          </Link>
-        ))}
+
+      <Suspense fallback={<h2>Да гружусь я ...</h2>}>
+        <Await resolve={posts}>
+          {(resolvedPosts) => (
+            <>
+              {resolvedPosts
+                .filter(
+                  (post) =>
+                    post.title.includes(postQuery) && post.id >= startsFrom
+                )
+                .map((post) => (
+                  <Link key={post.id} to={`/posts/${post.id}`}>
+                    <li>{post.title}</li>
+                  </Link>
+                ))}{" "}
+            </>
+          )}
+        </Await>
+      </Suspense>
     </div>
   );
 };
-
-export const blogLoader = async ({ request, params }) => {
-  console.log(request, params);
+async function getPosts() {
   const res = await fetch("https://jsonplaceholder.typicode.com/posts");
   return res.json();
+}
+export const blogLoader = async ({ request, params }) => {
+  console.log(request, params);
+  {
+    /*Просто чтобы знать что они есть)*/
+  }
+  return defer({
+    posts: getPosts(),
+  });
 };
 export default BlogPage;
