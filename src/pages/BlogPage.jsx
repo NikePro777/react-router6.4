@@ -1,21 +1,14 @@
-import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useLoaderData, useSearchParams } from "react-router-dom";
 import BlogFilter from "../components/BlogFilter";
 
 const BlogPage = () => {
-  const [posts, setPosts] = useState([]);
+  const posts = useLoaderData();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const postQuery = searchParams.get("post") || "";
   let latest = searchParams.has("latest");
 
   const startsFrom = latest ? 80 : 1;
-
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts")
-      .then((res) => res.json())
-      .then((data) => setPosts(data));
-  }, []);
 
   return (
     <div>
@@ -40,4 +33,9 @@ const BlogPage = () => {
   );
 };
 
+export const blogLoader = async ({ request, params }) => {
+  console.log(request, params);
+  const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+  return res.json();
+};
 export default BlogPage;
