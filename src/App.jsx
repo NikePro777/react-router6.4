@@ -12,6 +12,7 @@ import About from "./pages/AboutPage";
 import BlogPage, { blogLoader } from "./pages/BlogPage";
 import CreatePost from "./pages/CreatePost";
 import EditPost from "./pages/EditPost";
+import ErrorPage from "./pages/ErrorPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -21,7 +22,12 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route index element={<HomePage />} />
-      <Route path="posts" element={<BlogPage />} loader={blogLoader} />
+      <Route
+        path="posts"
+        element={<BlogPage />}
+        loader={blogLoader}
+        errorElement={<ErrorPage />}
+      />
       <Route path="posts/:id" element={<SinglePage />} loader={postLoader} />
       <Route path="posts/:id/edit" element={<EditPost />} />
       <Route

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import {
   Await,
-  defer,
+  json,
   Link,
   useLoaderData,
   useSearchParams,
@@ -51,6 +51,12 @@ const BlogPage = () => {
 };
 async function getPosts() {
   const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+  // if (!res.ok) {
+  //   throw new Response("сообщение какое-либо", {
+  //     status: res.status,
+  //     statusText: "not Found",
+  //   });
+  // }
   return res.json();
 }
 export const blogLoader = async ({ request, params }) => {
@@ -58,8 +64,12 @@ export const blogLoader = async ({ request, params }) => {
   {
     /*Просто чтобы знать что они есть)*/
   }
-  return defer({
-    posts: getPosts(),
-  });
+  const posts = getPosts();
+  if (!posts.length) {
+    throw json({ message: "not Found", reason: "Wrong url" }, { status: 404 });
+  }
+  return {
+    posts,
+  };
 };
 export default BlogPage;
