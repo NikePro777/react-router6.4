@@ -10,7 +10,7 @@ import { AuthProvider } from "./hoc/AuthProvider";
 import RequireAuth from "./hoc/RequireAuth";
 import About from "./pages/AboutPage";
 import BlogPage, { blogLoader } from "./pages/BlogPage";
-import CreatePost from "./pages/CreatePost";
+import CreatePost, { CreatePostAction } from "./pages/CreatePost";
 import EditPost from "./pages/EditPost";
 import ErrorPage from "./pages/ErrorPage";
 import HomePage from "./pages/HomePage";
@@ -37,6 +37,7 @@ const router = createBrowserRouter(
             <CreatePost />
           </RequireAuth>
         }
+        action={CreatePostAction}
       />
       <Route path="about" element={<About />}>
         <Route path="contacts" element={<p>Our contacts</p>}></Route>

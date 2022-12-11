@@ -64,7 +64,8 @@ export const blogLoader = async ({ request, params }) => {
   {
     /*Просто чтобы знать что они есть)*/
   }
-  const posts = getPosts();
+  const posts = await getPosts();
+  console.log(posts);
   if (!posts.length) {
     throw json({ message: "not Found", reason: "Wrong url" }, { status: 404 });
   }
