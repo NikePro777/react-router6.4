@@ -11,7 +11,7 @@ import RequireAuth from "./hoc/RequireAuth";
 import About from "./pages/AboutPage";
 import BlogPage, { blogLoader } from "./pages/BlogPage";
 import CreatePost, { CreatePostAction } from "./pages/CreatePost";
-import EditPost from "./pages/EditPost";
+import EditPost, { updatePostAction } from "./pages/EditPost";
 import ErrorPage from "./pages/ErrorPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
@@ -29,7 +29,12 @@ const router = createBrowserRouter(
         errorElement={<ErrorPage />}
       />
       <Route path="posts/:id" element={<SinglePage />} loader={postLoader} />
-      <Route path="posts/:id/edit" element={<EditPost />} />
+      <Route
+        path="posts/:id/edit"
+        element={<EditPost />}
+        loader={postLoader}
+        action={updatePostAction}
+      />
       <Route
         path="posts/new"
         element={
