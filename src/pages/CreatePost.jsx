@@ -1,14 +1,15 @@
-import { redirect, useNavigate } from "react-router-dom";
+import { redirect, useNavigate, useNavigation } from "react-router-dom";
 import NewPost from "../components/NewPost";
 import { useAuth } from "../hook/useAuth";
 
 const CreatePost = () => {
   const { signout } = useAuth();
   const navigate = useNavigate();
+  const navigation = useNavigation();
   return (
     <div>
       <h1>Create a post</h1>
-      <NewPost />
+      <NewPost submitting={navigation.state === "submitting"} />
       <button onClick={() => signout(() => navigate("/", { replace: true }))}>
         Log Out
       </button>
