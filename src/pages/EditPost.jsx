@@ -33,6 +33,9 @@ const updatePost = async (post) => {
 
 export const updatePostAction = async ({ request }) => {
   const formData = await request.formData();
+  if (!formData.get("title") || !formData.get("body")) {
+    return { message: "All field is required!" };
+  }
   const updatedPost = await updatePost(formData);
   return { message: `Post ${updatedPost.id} was successfully updated` };
 };
